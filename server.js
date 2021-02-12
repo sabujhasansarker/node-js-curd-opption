@@ -1,10 +1,13 @@
 const app = require("express")();
 
 // meddleares 🙂
-const middlewares = require("./middleware/middleware");
+const middlewares = require("./middleware");
 middlewares(app);
 
 // router 🙂
+const router = require("./router");
+router(app);
+
 // DB connaction 🙂
 const DB = require("./config/db");
 DB();

@@ -9,7 +9,7 @@ exports.getAllPost = async (req, res, next) => {
     if (posts) {
       return res.status(200).json(posts);
     } else {
-      return res.status(404).json({ msg: "Posts not found" });
+      return res.status(404).json({ msg: "Posts not found 🎈" });
     }
   } catch (err) {
     serverError(res, err, next);
@@ -44,6 +44,26 @@ exports.deletePost = async (req, res, next) => {
     } else {
       await Post.findByIdAndDelete(id);
       return res.status(200).json({ msg: "Post deleted ✔" });
+    }
+  } catch (err) {
+    serverError(res, err, next);
+  }
+};
+
+exports.updatePost = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { body } = req.body;
+    let post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found 😥" });
+    } else {
+      post = await Post.findByIdAndUpdate(
+        id,
+        { $set: { body } },
+        { new: true }
+      );
+      return res.status(200).json(post);
     }
   } catch (err) {
     serverError(res, err, next);

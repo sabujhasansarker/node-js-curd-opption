@@ -1,4 +1,4 @@
-const post = require("./post");
+const post = require("./postRoute");
 
 const router = [{ path: "/post", handler: post }];
 

@@ -34,3 +34,18 @@ exports.addPost = async (req, res, next) => {
     serverError(res, err, next);
   }
 };
+
+exports.deletePost = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found 😥" });
+    } else {
+      await Post.findByIdAndDelete(id);
+      return res.status(200).json({ msg: "Post deleted ✔" });
+    }
+  } catch (err) {
+    serverError(res, err, next);
+  }
+};
